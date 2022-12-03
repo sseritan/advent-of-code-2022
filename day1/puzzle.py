@@ -4,7 +4,7 @@
 import sys
 
 # Defaults for Puzzle 2
-def find_max_cals(fname: str = 'puzzle1_input.txt', num_elves: int = 3) -> int:
+def find_max_cals(fname: str = 'input.txt', num_elves: int = 3) -> None:
     print(f'Finding max calories from file {fname} with top {num_elves} elves')
     
     with open(fname, 'r') as f:
