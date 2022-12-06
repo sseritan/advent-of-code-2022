@@ -3,7 +3,8 @@
 
 import sys
 
-def find_packet_start(fname: str = 'input.txt', header_size:int = 4) -> None:
+# Defaults for Part 2
+def find_packet_start(fname: str = 'input.txt', header_size:int = 14) -> None:
     with open(fname, 'r') as f:
         lines = f.readlines()
 
@@ -31,5 +32,7 @@ def find_packet_start(fname: str = 'input.txt', header_size:int = 4) -> None:
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         find_packet_start(sys.argv[1])
+    elif len(sys.argv) == 3:
+        find_packet_start(sys.argv[1], header_size=sys.argv[2])
     else:
         find_packet_start()
