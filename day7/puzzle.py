@@ -28,6 +28,12 @@ class Directory(object):
 
         return max_size_subdirs
     
+    def get_recursive_sizes(self):
+        sizes = [self.get_size()]
+        for sd in self.subdirs:
+            sizes.extend(sd.get_recursive_sizes())
+        return sizes
+    
     def print(self, level=0):
         print(' ' * 2*level, end='')
         print(f'{self.name} (total size: {self.get_size()})')
@@ -78,8 +84,22 @@ def sum_max_size_dirs(fname: str = 'input.txt', max_size: int = 100000) -> None:
 
     print(f'Combined size of all subdirs under size {max_size}: {sum([sd.get_size() for sd in subdirs_with_max_size])}')
 
+def find_min_dir_to_del_size(fname: str = 'input.txt', allowed_size: int = 40000000) -> None:
+    root = parse_directories(fname)
+    min_dir_size = root.get_size() - allowed_size
+
+    sizes = sorted(root.get_recursive_sizes())
+    for size in sizes:
+        if size < min_dir_size:
+            continue
+
+        print(f'Size of smallest directory to delete: {size}')
+        return
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         sum_max_size_dirs(sys.argv[1])
+        find_min_dir_to_del_size(sys.argv[1])
     else:
         sum_max_size_dirs()
+        find_min_dir_to_del_size()
