@@ -20,15 +20,30 @@ def sum_signal_strength(fname: str = 'input.txt', target_cycles: Iterable[int] =
 
     X = 1
     signal_strengths = []
+    screen_location = 0
+    screen_output = ''
     for i, add_value in enumerate(add_values):
         cycle = i + 1
         # Grab value/signal strength during cycle
         if cycle in target_cycles:
             signal_strengths.append(cycle*X)
 
+        if screen_location > X-2 and screen_location < X+2:
+            screen_output += '#'
+        else:
+            screen_output += '.'
+
+        # End of cycle, increment value/move sprite and move screen location
         X += add_value
+        if cycle%40 == 0:
+            screen_location = 0
+            screen_output += '\n'
+        else:
+            screen_location += 1
 
     print(f'Sum of signal strengths: {sum(signal_strengths)}')
+    print('Screen output:')
+    print(screen_output)
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
